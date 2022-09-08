@@ -19,7 +19,7 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
 
 Home (Filters) | Edit Task Screen | Create and Delete Task | Categories Manager
 --- | --- | --- | ---
-![Alt Text]([https://media2.giphy.com/media/ooK7DOydVl68DisaWb/giphy.gif?cid=790b7611cfca9da8fc008b59848108583e4b59a6d5442f9b&rid=giphy.gif&ct=g)(https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g)) | ![Alt Text](https://media4.giphy.com/media/JYCgOpLU21wbbdRId1/giphy.gif?cid=790b761111984e7640ef2221e844740900fb644b328e483d&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/d5uBPsDa3jwNgEYa8j/giphy.gif?cid=790b7611a3a74adb3b1a7432d3e0a3fb803863622159c4df&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/KVHy2SmwTm8fuSTyOV/giphy.gif?cid=790b7611f0986431d25eb14ca39893fc7fb553722953b253&rid=giphy.gif&ct=g)
+![Alt Text](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g)| ![Alt Text](https://media4.giphy.com/media/JYCgOpLU21wbbdRId1/giphy.gif?cid=790b761111984e7640ef2221e844740900fb644b328e483d&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/d5uBPsDa3jwNgEYa8j/giphy.gif?cid=790b7611a3a74adb3b1a7432d3e0a3fb803863622159c4df&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/KVHy2SmwTm8fuSTyOV/giphy.gif?cid=790b7611f0986431d25eb14ca39893fc7fb553722953b253&rid=giphy.gif&ct=g)
 
 
 ## Implementações futuras   
