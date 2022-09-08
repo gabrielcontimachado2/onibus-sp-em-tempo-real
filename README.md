@@ -1,6 +1,6 @@
-# Ônibus SP em tempo real  
+# Ônibus SP em tempo real   
 
-    Aplicativo para Android, que disponibiliza os ônibus de São Paulo em tempo real no mapa, consumindo a API do OLHO VIVO, o aplicativo ainda não está finalizado,  
+  Aplicativo para Android, que disponibiliza os ônibus de São Paulo em tempo real no mapa, consumindo a API do OLHO VIVO, o aplicativo ainda não está finalizado,       
 então com o tempo irei atualizando o projeto nesse repositório com as novas funcionalidades.   
 
 ## Linguagem, arquitetura e bibliotecas utilizadas para desenvolver o projeto    
@@ -15,8 +15,11 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
 • Google Maps    
  
 ## Gifs do projeto finalizado
-Home (Filters) | Edit Task Screen | Create and Delete Task | Categories Manager
-  
+Tela principal sem filtros ativo | Filtro ativo | Favoritar uma linha | Posição atual  
+--- | --- | --- | ---   
+![Alt Text](https://media2.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611c8a62ea7a7720b2348be924831765e4ed853243f&rid=giphy.gif&ct=g) | ![Alt Text](https://media3.giphy.com/media/6a4PlPZUFaczpXT42j/giphy.gif?cid=790b761143504bb5dbb4cb2c8106e3ed57a7d92b5f3a14ae&rid=giphy.gif&ct=g) | ![Alt Text](https://media1.giphy.com/media/qvGVp7Ffq1Ak8GFGaO/giphy.gif?cid=790b76112528bb0b84a05337f43541398b2bec13996ed813&rid=giphy.gif&ct=g) | ![Alt Text](https://media4.giphy.com/media/QzEqs3hIUg9gLN2aTc/giphy.gif?cid=790b76118ab70fcdebd8f54bc607668d63f08f045a938e9e&rid=giphy.gif&ct=g)
+
+
 
 
 ## Implementações futuras   
@@ -29,7 +32,8 @@ Home (Filters) | Edit Task Screen | Create and Delete Task | Categories Manager
 • Adicionar uma Splash Screen e o ícone, para aplicativo ficar mais elegante.     
 
 ## Problemas conhecidos até o momento:      
-• A quantidade total de ônibus apresentada no chip no canto inferior a esquerda, não está correta quando a busca está sem filtro de linha, caso tenha ativo um filtro, é aprestado o valor correto.    
+• A quantidade total de ônibus apresentada no chip no canto inferior a esquerda, não está correta quando a busca está sem filtro de linha, caso tenha ativo um filtro, é aprestado o valor correto.       
+• Mesmo utilizando o cluster de marker do google maps, as vezes o app ainda tem problemas de otimização, demora um pouco para agrupar os ônibus nos círculos.  
 
 
 
