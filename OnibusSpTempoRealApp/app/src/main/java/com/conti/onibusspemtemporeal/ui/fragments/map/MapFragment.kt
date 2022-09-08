@@ -118,6 +118,7 @@ class MapFragment : Fragment() {
                     if (uiState.currentLocationUser != LatLng(0.0, 0.0) && uiState.focusUser) {
 
                         currentUserMarker.isVisible = true
+                        currentUserMarker.title = "Posição atual, falta implementar circulo"
                         currentUserMarker.position = uiState.currentLocationUser
 
                         //posição que a camera vai
