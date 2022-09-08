@@ -17,9 +17,9 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
   
 ## Gifs do projeto finalizado
 
-Home (Filters) | Edit Task Screen | Create and Delete Task | Categories Manager
+Tela principal sem filtros | Com filtros | Linhas favoritas | Categories Manager
 --- | --- | --- | ---
-![Alt Text](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g)| ![Alt Text]() | ![Alt Text]() | ![Alt Text]()
+![Alt Text]()| ![Alt Text]() | ![Alt Text]() | ![Alt Text]()
 
 
 ## Implementações futuras   
