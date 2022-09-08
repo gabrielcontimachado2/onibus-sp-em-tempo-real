@@ -15,11 +15,9 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
 • Google Maps    
  
 ## Gifs do projeto finalizado
-Tela principal sem filtros ativo | Filtro ativo | Favoritar uma linha | Posição atual  
---- | --- | --- | ---   
-![Alt Text](https://media2.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611c8a62ea7a7720b2348be924831765e4ed853243f&rid=giphy.gif&ct=g) | ![Alt Text](https://media3.giphy.com/media/6a4PlPZUFaczpXT42j/giphy.gif?cid=790b761143504bb5dbb4cb2c8106e3ed57a7d92b5f3a14ae&rid=giphy.gif&ct=g) | ![Alt Text](https://media1.giphy.com/media/qvGVp7Ffq1Ak8GFGaO/giphy.gif?cid=790b76112528bb0b84a05337f43541398b2bec13996ed813&rid=giphy.gif&ct=g) | ![Alt Text](https://media4.giphy.com/media/QzEqs3hIUg9gLN2aTc/giphy.gif?cid=790b76118ab70fcdebd8f54bc607668d63f08f045a938e9e&rid=giphy.gif&ct=g)
-
-
+Tela principal sem filtros ativo | Filtro ativo | Favoritar uma linha | Posição atual
+--- | --- | --- | ---
+![Alt Text](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/6a4PlPZUFaczpXT42j/giphy.gif?cid=790b7611829bb160c3e0027e2c399efec184678352f14015&rid=giphy.gif&ct=g) | ![Alt Text](https://media3.giphy.com/media/qvGVp7Ffq1Ak8GFGaO/giphy.gif?cid=790b7611daf4c4a85b376a3432bff4983fbce746ee4afdb3&rid=giphy.gif&ct=g) | ![Alt Text](https://media1.giphy.com/media/QzEqs3hIUg9gLN2aTc/giphy.gif?cid=790b7611b368c9b4dba06d0e868f91caae19d5404f881c6b&rid=giphy.gif&ct=g)
 
 
 ## Implementações futuras   
