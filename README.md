@@ -15,9 +15,6 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
 • Google Maps    
  
 ## Gifs do projeto finalizado
-Home (Sem filtros)| Filtro Ativo | Linhas favoritas | Localização Atual
---- | --- | --- | ---
-![Alt Text](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g) | ![Alt Text](https://media2.giphy.com/media/6a4PlPZUFaczpXT42j/giphy.gif?cid=790b7611829bb160c3e0027e2c399efec184678352f14015&rid=giphy.gif&ct=g) | ![Alt Text](https://media3.giphy.com/media/qvGVp7Ffq1Ak8GFGaO/giphy.gif?cid=790b7611daf4c4a85b376a3432bff4983fbce746ee4afdb3&rid=giphy.gif&ct=g) | ![Alt Text](https://media1.giphy.com/media/QzEqs3hIUg9gLN2aTc/giphy.gif?cid=790b7611b368c9b4dba06d0e868f91caae19d5404f881c6b&rid=giphy.gif&ct=g)
 ![hippo](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g)
 
 ## Implementações futuras   
