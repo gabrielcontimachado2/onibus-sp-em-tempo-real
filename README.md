@@ -17,7 +17,7 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
   
 ## Gifs do projeto finalizado
 
-Tela principal sem filtros | Com filtros | Linhas favoritas | Categories Manager
+Tela principal sem filtros | Com filtros | Linhas favoritas | Localização atual
 --- | --- | --- | ---
 ![Alt Text]()| ![Alt Text]() | ![Alt Text]() | ![Alt Text]()
 
