@@ -17,11 +17,7 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
   
 ## Gifs do projeto finalizado
 
-Tela principal sem filtros | Com filtros | Linhas favoritas | Localização atual
---- | --- | --- | ---
-
-![]([name-of-giphy.gif](https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g))| ![Alt Text]() | ![Alt Text]() | ![Alt Text]()
-
+<img src="https://media4.giphy.com/media/Z0RVn0j9qcft2dLSJu/giphy.gif?cid=790b7611bd7826c4329ffa34c18761e278379be223761b8a&rid=giphy.gif&ct=g">
 
 ## Implementações futuras   
 • Ao pesquisar as linhas, além de mostrar os ônibus dessa linha também vai ser disponibilizado no mapa o ícone das paradas que essa linha passa.     
