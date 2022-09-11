@@ -70,7 +70,6 @@ class RouteBusSearchDialogFragment : DialogFragment() {
         selectTheBusRoute()
         favoriteBusRoute()
         observerBusRoute()
-        observerUiState()
 
     }
 
@@ -148,19 +147,5 @@ class RouteBusSearchDialogFragment : DialogFragment() {
         }
     }
 
-    /** Função para observar o estado da ui */
-    private fun observerUiState() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                viewModel.uiState.collect {
-                    if (it.message.isNotEmpty()) {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                        viewModel.clearMessages()
-                    }
-                }
-            }
-        }
-    }
 }
 

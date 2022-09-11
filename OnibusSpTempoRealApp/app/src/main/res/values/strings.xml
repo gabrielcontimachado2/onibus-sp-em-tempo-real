@@ -38,6 +38,8 @@
     <string name="update">Última atualização :</string>
     <string name="favorite">Favoritos</string>
     <string name="barrier">|</string>
+    <string name="tittleDialog">Permissão de localização</string>
+    <string name="messageDialog">É necessário aceita a permissão de localização atual, para pode ver sua localização no aplicativo</string>
 
 
 </resources>

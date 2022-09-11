@@ -11,6 +11,8 @@ import com.conti.onibusspemtemporeal.data.models.ResponseAllBus
 import com.conti.onibusspemtemporeal.domain.apiRepository.OlhoVivoApiRepository
 import com.conti.onibusspemtemporeal.domain.roomRepository.RoomRepository
 import com.conti.onibusspemtemporeal.util.Constants.START_BUS_ROUTE
+import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LINE_CODE
+import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LOCATION_USER
 import com.conti.onibusspemtemporeal.util.Constants.START_MESSAGE
 import com.conti.onibusspemtemporeal.util.retrofitHandling.Resource
 import com.google.android.gms.maps.model.LatLng
@@ -35,15 +37,16 @@ class OnibusSpViewModel @Inject constructor(
     val busRoute: LiveData<Resource<List<BusRoute>>>
         get() = _busRoute
 
-    private val _favoritesBusRoute = MutableLiveData<List<BusRoute>>()
-    val favoritesBusRoute: LiveData<List<BusRoute>>
-        get() = _favoritesBusRoute
+    //UI STATES
+    private val _uiStateMainActivity: MutableStateFlow<UiStateMainActivity> =
+        MutableStateFlow(UiStateMainActivity())
+    val uiStateMainActivity: StateFlow<UiStateMainActivity>
+        get() = _uiStateMainActivity.asStateFlow()
 
-    private val _currentBuses = MutableLiveData<Resource<ResponseAllBus>>()
-
-    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState>
-        get() = _uiState.asStateFlow()
+    private val _uiStateMapFragment: MutableStateFlow<UiStateMapFragment> =
+        MutableStateFlow(UiStateMapFragment())
+    val uiStateMapFragment: StateFlow<UiStateMapFragment>
+        get() = _uiStateMapFragment.asStateFlow()
 
 
     init {
@@ -58,29 +61,30 @@ class OnibusSpViewModel @Inject constructor(
     }
 
 
-    /** Função para realizar requisição da posição de todos os ônibus, coloco [_uiState] como loading true, e realizo dentro do try e catch,
+    /** Função para realizar requisição da posição de todos os ônibus, coloco [_uiStateMapFragment] como loading true, e realizo dentro do try e catch,
      * a requisição utilizando o repositorio da api, utilizo da classe [handleBusRoutersResponse] para manipular a resposta e atualizar ela para
-     * a [_uiState], caso tenha algum erro no processo, atualizo a [_uiState] com a mensagem do erro */
+     * a [_uiStateMapFragment], caso tenha algum erro no processo, atualizo a [_uiStateMapFragment] com a mensagem do erro */
     fun getBus() {
         viewModelScope.launch {
 
-            _currentBuses.postValue(Resource.Loading())
-
-            _uiState.update {
+            _uiStateMapFragment.update {
                 it.copy(isLoading = true)
             }
 
             try {
                 if (_authenticate.value!!) {
                     val response = apiRepository.getAllBus()
-                    _currentBuses.postValue(handleBusResponse(response))
+
+                    handleBusResponse(response)
                 } else {
-                    _uiState.update {
-                        it.copy(message = "Verfique sua conexão, o aplicativo não funciona sem internet ")
+
+                    _uiStateMainActivity.update {
+                        it.copy(message = "Erro no sistema, tente novamente")
                     }
+                    authenticate()
                 }
             } catch (t: Throwable) {
-                _uiState.update {
+                _uiStateMainActivity.update {
                     it.copy(message = t.message.toString())
                 }
             }
@@ -90,9 +94,10 @@ class OnibusSpViewModel @Inject constructor(
 
     /** Função para manipular uma resposta de linha em relação aos ônibus, caso a resposta for de sucesso
      * crio uma variável para armazenar a linha e os ônibus em circulação delas, após armazernas todos os õnibus
-     * atualizo o [_uiState] com essa lista de onibus, e para finalizar a função retorno sucesso, caso não tenha entrado no if
+     * atualizo o [_uiStateMapFragment] com essa lista de onibus, e para finalizar a função retorno sucesso, caso não tenha entrado no if
      * finalizo a função retornando erro */
-    private fun handleBusResponse(response: Response<ResponseAllBus>): Resource<ResponseAllBus> {
+    private fun handleBusResponse(response: Response<ResponseAllBus>) {
+
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
 
@@ -122,21 +127,23 @@ class OnibusSpViewModel @Inject constructor(
                     }
                 }
 
-                _uiState.update {
+                _uiStateMapFragment.update {
                     it.copy(
                         currentBuses = currentListBusWithRoute,
                         isLoading = false,
-                        quantityBusInThisRoute = quantityBus
                     )
                 }
 
-                return Resource.Success(resultResponse)
+                _uiStateMainActivity.update {
+                    it.copy(currentQuantityBus = quantityBus)
+                }
+
+            }
+        } else {
+            _uiStateMainActivity.update {
+                it.copy(message = "Não foi possivel carregar ônibus, tente novamente")
             }
         }
-        _uiState.update {
-            it.copy(message = "Não foi possivel carregar, tente novamente")
-        }
-        return Resource.Error(response.message())
     }
 
 
@@ -144,7 +151,7 @@ class OnibusSpViewModel @Inject constructor(
      * disponiveis de acordo com o que foi digitado pelo usuário e armazenado na, [busRoute],
      * ao começar a função [_busRoute] recebe estado de Loading, e em um try e catch realizo a requisição e atualizo [_busRoute] com o resultado da
      * lista de linhas disponiveis ou caso não tenha disponivel ou ocorra algum problema na requisição,
-     * o cath retorna a mensagem para atualizar [uiState]*/
+     * o cath retorna a mensagem para atualizar [uiStateMapFragment]*/
     fun searchBusRoute(busRoute: String) {
         viewModelScope.launch {
             _busRoute.postValue(Resource.Loading())
@@ -153,12 +160,12 @@ class OnibusSpViewModel @Inject constructor(
                     val response = apiRepository.getRoutes(busRoute)
                     _busRoute.postValue(handleBusRoutersResponse(response))
                 } else {
-                    _uiState.update {
+                    _uiStateMainActivity.update {
                         it.copy(message = "Verfique sua conexão, o aplicativo não funciona sem internet ")
                     }
                 }
             } catch (t: Throwable) {
-                _uiState.update {
+                _uiStateMainActivity.update {
                     it.copy(message = t.message.toString())
                 }
             }
@@ -181,41 +188,59 @@ class OnibusSpViewModel @Inject constructor(
     /** Função para realizar a autenticação da API OLHO VIVO
      * no try e catch realizo a requisição e caso a api seja autenticada com sucesso
      * armazeno a resposta em [_authenticate] e caso ocorra algum problema
-     * atualizo a [_uiState] com a mensagem de erro dependendo do tipo de exception*/
+     * atualizo a [_uiStateMapFragment] com a mensagem de erro dependendo do tipo de exception*/
     private fun authenticate() {
-        _uiState.update {
+
+        _uiStateMapFragment.update {
             it.copy(isLoading = true)
         }
+
         viewModelScope.launch {
             try {
+
                 _authenticate.value = apiRepository.postAuthenticate()
-                _uiState.update {
+
+                _uiStateMapFragment.update {
                     it.copy(isLoading = false)
                 }
+
             } catch (t: Throwable) {
+
                 when (t) {
                     is IOException -> {
-                        _uiState.update {
-                            it.copy(message = t.message.toString())
+                        _uiStateMainActivity.update {
+                            it.copy(message = "SPTrans está fora do ar, tente novamento mais tarde")
+                        }
+
+                        _uiStateMapFragment.update {
+                            it.copy(isLoading = false)
                         }
                     }
                     else -> {
-                        _uiState.update {
+                        _uiStateMainActivity.update {
                             it.copy(message = "Erro de conversão")
+                        }
+
+                        _uiStateMapFragment.update {
+                            it.copy(isLoading = false)
                         }
                     }
                 }
+
             }
+
         }
     }
 
 
-    /** Função para salvar a linha, envio a [busRoute] para o room utilizando o repository do room, e atualizo o [_uiState]
+    /** Função para salvar a linha, envio a [busRoute] para o room utilizando o repository do room, e atualizo o [_uiStateMapFragment]
      * com a mensagem que a linha foi salva */
     fun favoriteBusRoute(busRoute: BusRoute) {
         viewModelScope.launch {
+
             roomRepository.favoriteBusRoute(busRoute)
-            _uiState.update {
+
+            _uiStateMainActivity.update {
                 it.copy(message = "Linha: ${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}, salva nos favoritos com Sucesso!!")
             }
         }
@@ -225,63 +250,76 @@ class OnibusSpViewModel @Inject constructor(
     /** Função para realizer a coleta de um fluxo de Flow do [roomRepository] com todas as linhas que estão salvas no favorito
      * no Room e passo esse valor para mutableLiveData [_favoritesBusRoute] */
     private suspend fun getFavoritesBusRoute() {
+
         roomRepository.getFavoritesBusRoutes().collect { busRouteList ->
-            _favoritesBusRoute.value = busRouteList
+
+            _uiStateMainActivity.update {
+                it.copy(favoriteBuses = busRouteList)
+            }
+
         }
     }
 
 
-    /** Função para limpar as mensagens do [_uiState]*/
+    /** Função para limpar as mensagens do [_uiStateMapFragment]*/
     fun clearMessages() {
-        _uiState.update {
-            it.copy(message = "")
+        _uiStateMainActivity.update {
+            it.copy(message = START_MESSAGE)
         }
     }
 
 
     /** Função para limpar o letreiro completo atual*/
     fun clearLineCode() {
-        _uiState.update {
-            it.copy(lineCod = "")
+        _uiStateMainActivity.update {
+            it.copy(currentLineCod = START_CURRENT_LINE_CODE)
         }
     }
 
 
     /** Função para realizar a requisição de todos os ônibus que estão circulando e a filtragem dessa requisição,
-     * abro um escopo de viewmodel e atualizo o [_uiState] para loading true, no try e catch antes de realizar a requisição
+     * abro um escopo de viewmodel e atualizo o [_uiStateMapFragment] para loading true, no try e catch antes de realizar a requisição
      * verifico se já estou logado, caso sim, a requisição é feita e enviada para classe [handleBusRoutersResponseAndFilter]
-     * para fazer a manipulação da response filtrar e atualizar o [_uiState] com o novo valor de lista de onibus com relação a linha
-     * caso seja pego algum throwable durante a execução atualizo o [_uiState] com mensagem de erro*/
+     * para fazer a manipulação da response filtrar e atualizar o [_uiStateMapFragment] com o novo valor de lista de onibus com relação a linha
+     * caso seja pego algum throwable durante a execução atualizo o [_uiStateMapFragment] com mensagem de erro*/
     fun getBusRouteSelected(fullPlacard: String) {
 
-        _uiState.update {
-            it.copy(lineCod = fullPlacard)
+        _uiStateMainActivity.update {
+            it.copy(currentLineCod = fullPlacard)
         }
 
         viewModelScope.launch {
 
-            _currentBuses.postValue(Resource.Loading())
-
-            _uiState.update {
+            _uiStateMapFragment.update {
                 it.copy(isLoading = true)
             }
 
             try {
                 if (_authenticate.value!!) {
+
                     val response = apiRepository.getAllBus()
-                    _currentBuses.postValue(handleBusRoutersResponseAndFilter(response))
-                    _uiState.update {
+
+                    handleBusRoutersResponseAndFilter(response)
+
+                    _uiStateMapFragment.update {
                         it.copy(isLoading = false)
                     }
+
                 } else {
-                    _uiState.update {
+
+                    _uiStateMainActivity.update {
                         it.copy(message = "Verfique sua conexão, o aplicativo não funciona sem internet ")
                     }
+
+                    authenticate()
+
                 }
             } catch (t: Throwable) {
-                _uiState.update {
+
+                _uiStateMainActivity.update {
                     it.copy(message = t.message.toString())
                 }
+
             }
 
         }
@@ -290,18 +328,18 @@ class OnibusSpViewModel @Inject constructor(
 
 
     /** Função para manipular o resultado de um Response, caso [response] seja de sucesso, utilizo do for in na relação de linha e ônibus
-     *  e verifico qual linha tem o letreiro completo igual ao letreiro atual da [_uiState], quando forem iguais,
-     *  crio uma lista para armazernar todos os ônibus dessa linha, após armazenar todos eles, atualizo o [_uiState], com o valor da [curentListBusWithRoute]
+     *  e verifico qual linha tem o letreiro completo igual ao letreiro atual da [_uiStateMapFragment], quando forem iguais,
+     *  crio uma lista para armazernar todos os ônibus dessa linha, após armazenar todos eles, atualizo o [_uiStateMapFragment], com o valor da [curentListBusWithRoute]
      *  finalizo o if retornando Resourcer.Sucess, caso não tenha entrado no if retorno Resource.Error*/
-    private fun handleBusRoutersResponseAndFilter(response: Response<ResponseAllBus>): Resource<ResponseAllBus> {
+    private fun handleBusRoutersResponseAndFilter(response: Response<ResponseAllBus>) {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
 
                 //Para saber se a linha que está sendo buscada, tem algum ônibus em circulação
-                var lineSearchExist: Boolean = false
+                var lineSearchExist = false
 
                 for (line in resultResponse.lineRelation) {
-                    if (line.fullPlacard == _uiState.value.lineCod) {
+                    if (line.fullPlacard == _uiStateMainActivity.value.currentLineCod) {
 
                         lineSearchExist = true
 
@@ -325,44 +363,50 @@ class OnibusSpViewModel @Inject constructor(
                             currentListBusWithRoute.add(busWithLine)
                         }
 
-                        _uiState.update {
+                        _uiStateMapFragment.update {
                             it.copy(
                                 isLoading = false,
-                                currentBuses = currentListBusWithRoute,
-                                quantityBusInThisRoute = line.amountBusFound
+                                currentBuses = currentListBusWithRoute
                             )
                         }
 
-                        return Resource.Success(resultResponse)
+                        _uiStateMainActivity.update {
+                            it.copy(currentQuantityBus = line.amountBusFound)
+                        }
                     }
                 }
 
                 if (!lineSearchExist) {
-                    _uiState.update {
+                    _uiStateMainActivity.update {
                         it.copy(message = "A linha procurada não tem ônibus em circulação no momento")
                     }
                 }
             }
-        }
-        return Resource.Error(response.message())
-    }
-
-    //dar o zoom no onibus caso ja tenha um zoom passar para false
-    fun zoomBus() {
-        if (_uiState.value.zoomCurrentBuses) {
-            _uiState.update {
-                it.copy(zoomCurrentBuses = false)
-            }
         } else {
-            _uiState.update {
-                it.copy(zoomCurrentBuses = true)
+            _uiStateMainActivity.update {
+                it.copy(message = "Não foi possivel carregar ônibus, tente novamente")
             }
         }
     }
 
-    //Atualizar a posição atual do usuario, e passar o zoom no usuario para tru
+    //Atualizar o estado de zoom do ônibus para true
+    fun zoomBus() {
+        _uiStateMapFragment.update {
+            it.copy(zoomCurrentBuses = true)
+        }
+    }
+
+
+    //Atualizar o estado de zoom de ônibus para false
+    fun offZoomBus() {
+        _uiStateMapFragment.update {
+            it.copy(zoomCurrentBuses = false)
+        }
+    }
+
+    //Atualizar o estado da posição do usuário e o zoom para true
     fun currentLocationUser(currentUserLocation: LatLng) {
-        _uiState.update {
+        _uiStateMapFragment.update {
             it.copy(
                 currentLocationUser = currentUserLocation,
                 focusUser = true
@@ -370,27 +414,31 @@ class OnibusSpViewModel @Inject constructor(
         }
     }
 
-    //Atualizar o estado do zoom da camera na posição atual do usuario para false
+    //Atualizar o estado do zoom no usuário atual para falso
     fun offFocusUser() {
-        _uiState.update {
+        _uiStateMapFragment.update {
             it.copy(focusUser = false)
         }
     }
 
-
 }
 
-/** data Class com o estado para ser passado do viewModel para a Ui, para ser utilizada em um StateFlow */
-data class UiState(
-    var message: String = START_MESSAGE,
-    var isLoading: Boolean = false,
-    var clearItem: Boolean = false,
-    var lineCod: String = "",
-    var quantityBusInThisRoute: Int = START_BUS_ROUTE,
-    var currentBuses: MutableList<BusWithLine> = mutableListOf(),
+/** Data class para representar o estado de UI do Map Fragment */
+data class UiStateMapFragment(
+    val isLoading: Boolean = false,
+    val currentBuses: List<BusWithLine> = emptyList(),
     val zoomCurrentBuses: Boolean = false,
-    val currentLocationUser: LatLng = LatLng(0.0, 0.0),
+    val currentLocationUser: LatLng = START_CURRENT_LOCATION_USER,
     val focusUser: Boolean = false
 )
+
+/** Data class para representar o estado de UI da Main Activity */
+data class UiStateMainActivity(
+    val message: String = START_MESSAGE,
+    val currentLineCod: String = START_CURRENT_LINE_CODE,
+    val currentQuantityBus: Int = START_BUS_ROUTE,
+    val favoriteBuses: List<BusRoute> = emptyList()
+)
+
 
 

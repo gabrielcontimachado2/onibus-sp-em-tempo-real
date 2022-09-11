@@ -1,6 +1,5 @@
 package com.conti.onibusspemtemporeal.ui.activitys
 
-import android.Manifest
 import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -15,11 +14,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.conti.onibusspemtemporeal.R
+import com.conti.onibusspemtemporeal.data.models.BusRoute
 import com.conti.onibusspemtemporeal.databinding.ActivityMainBinding
 import com.conti.onibusspemtemporeal.ui.fragments.route.RouteBusSearchDialogFragment
 import com.conti.onibusspemtemporeal.ui.viewModel.OnibusSpViewModel
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        setupPopupmenuFavorite()
         openSearchActivity()
         observerUiState()
         setupChipSelectCategory()
@@ -86,21 +84,17 @@ class MainActivity : AppCompatActivity() {
      * ao clicar no floating button, criei um popupMenu e adiciono no popupMenu todos
      * os itens da lista de linhas que foram consumidas do live data, com o título sendo o letreiro completo da linha
      * e caso selecione alguma item do menu, envio pra função do viewModel, a linha selecionada*/
-    private fun setupPopupmenuFavorite() {
+    private fun setupPopupmenuFavorite(favoriteBusRouteList: List<BusRoute>) {
         binding.floatingButtonFavorite.setOnClickListener {
 
             val popupMenu = PopupMenu(this, it)
 
-            viewModel.favoritesBusRoute.observe(this) { listBusRoute ->
+            popupMenu.menu.clear()
 
-                popupMenu.menu.clear()
+            popupMenu.menuInflater.inflate(R.menu.menu_popup_historico, popupMenu.menu)
 
-                popupMenu.menuInflater.inflate(R.menu.menu_popup_historico, popupMenu.menu)
-
-                listBusRoute.forEach { busRoute ->
-                    popupMenu.menu.add("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}")
-                }
-
+            favoriteBusRouteList.forEach { busRoute ->
+                popupMenu.menu.add("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}")
             }
 
             popupMenu.show()
@@ -124,22 +118,27 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                viewModel.uiState.collect { uiState ->
+                viewModel.uiStateMainActivity.collect { uiStateMainActivity ->
 
-                    binding.chipQuantityBus.text = uiState.quantityBusInThisRoute.toString()
+                    binding.chipQuantityBus.text = uiStateMainActivity.currentQuantityBus.toString()
 
                     when {
-                        uiState.message.isNotEmpty() -> {
+                        uiStateMainActivity.message.isNotEmpty() -> {
                             Toast.makeText(
                                 this@MainActivity,
-                                uiState.message,
+                                uiStateMainActivity.message,
                                 Toast.LENGTH_LONG
-                            )
-                                .show()
+                            ).show()
+
                             viewModel.clearMessages()
                         }
-                        uiState.lineCod.isNotEmpty() -> {
-                            setChip(uiState.lineCod)
+
+                        uiStateMainActivity.currentLineCod.isNotEmpty() -> {
+                            setChipCurrentLine(uiStateMainActivity.currentLineCod)
+                        }
+
+                        uiStateMainActivity.favoriteBuses.isNotEmpty() -> {
+                            setupPopupmenuFavorite(uiStateMainActivity.favoriteBuses)
                         }
 
                     }
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity() {
      * torna o chip visivel e com a [currentLineCod] coloco no .text do chip
      * caso o botao do close for clickado, chip fica invisvel e chamo duas funções do viewmodel
      * retirar a linha atual, e pedir pra buscar todos so ônibus*/
-    private fun setChip(currentLineCod: String) {
+    private fun setChipCurrentLine(currentLineCod: String) {
 
         with(binding.chipLineSelected) {
 
@@ -172,9 +171,8 @@ class MainActivity : AppCompatActivity() {
     /** Função para abrir o dialog fragment de busca de linhas de onibus*/
     private fun openSearchActivity() {
         binding.searchBusLines.setOnClickListener {
-            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
             val routeBusSearchDialogFragment = RouteBusSearchDialogFragment()
-            routeBusSearchDialogFragment.show(ft, "Dialog_route_bus")
+            routeBusSearchDialogFragment.show(supportFragmentManager, "Dialog_route_bus")
         }
     }
 
@@ -220,10 +218,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAlertDialog(requestCode: Int) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Permissão de localização")
-        builder.setMessage("É necessário aceita a permissão de localização atual, para pode ver sua localização no aplicativo")
+        builder.setTitle(getString(R.string.tittleDialog))
+        builder.setMessage(getString(R.string.messageDialog))
 
-        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
             requestPermissions(
                 arrayOf(permission.ACCESS_FINE_LOCATION),
                 requestCode
@@ -234,7 +232,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        builder.setNegativeButton(android.R.string.cancel) { dialog, wich ->
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
             dialog.dismiss()
         }
 
