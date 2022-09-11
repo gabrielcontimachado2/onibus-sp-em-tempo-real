@@ -8,8 +8,7 @@ então com o tempo irei atualizando o projeto nesse repositório com as novas fu
 • Android Jetpack     
 • Dagger Hilt    
 • Retrofit     
-• Room     
-• Firebase (Analytics and Crashlytics)    
+• Room       
 • Arquitetura MVVM    
 • Material Design  
 • Google Maps    
