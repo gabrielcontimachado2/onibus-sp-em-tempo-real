@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.busStop.BusStopDialogFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/app_bar_layout"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/zero"
+        app:cardElevation="@dimen/eight">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageButton_back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:elevation="@dimen/ten"
+                android:src="@drawable/ic_arrow_back_home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
+                android:text="@string/previsao_chegada"
+                android:textSize="@dimen/font_size_sixteen"
+                app:layout_constraintBottom_toBottomOf="@id/imageButton_back_home"
+                app:layout_constraintStart_toEndOf="@id/imageButton_back_home"
+                app:layout_constraintTop_toTopOf="@id/imageButton_back_home" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

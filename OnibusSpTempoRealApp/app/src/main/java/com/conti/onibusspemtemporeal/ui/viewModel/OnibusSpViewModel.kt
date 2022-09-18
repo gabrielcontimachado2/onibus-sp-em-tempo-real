@@ -6,14 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conti.onibusspemtemporeal.data.models.BusRoute
+import com.conti.onibusspemtemporeal.data.models.BusStop
 import com.conti.onibusspemtemporeal.data.models.BusWithLine
 import com.conti.onibusspemtemporeal.data.models.ResponseAllBus
 import com.conti.onibusspemtemporeal.domain.apiRepository.OlhoVivoApiRepository
 import com.conti.onibusspemtemporeal.domain.roomRepository.RoomRepository
-import com.conti.onibusspemtemporeal.util.Constants.START_BUS_ROUTE
 import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LINE_CODE
 import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LOCATION_USER
 import com.conti.onibusspemtemporeal.util.Constants.START_MESSAGE
+import com.conti.onibusspemtemporeal.util.Constants.START_QUANTITY_BUS
+import com.conti.onibusspemtemporeal.util.Constants.START_QUANTITY_BUS_STOP
 import com.conti.onibusspemtemporeal.util.retrofitHandling.Resource
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -184,6 +186,63 @@ class OnibusSpViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
+    fun getBusStopByLineCode(lineCode: Int) {
+
+        viewModelScope.launch {
+
+            _uiStateMapFragment.update {
+                it.copy(isLoading = true)
+            }
+
+            try {
+
+                if (_authenticate.value!!) {
+
+                    val response = apiRepository.getBusStopByLineCode(lineCode)
+
+                    handleBusStopByLineCodeResponse(response)
+
+                } else {
+
+                    _uiStateMainActivity.update {
+                        it.copy(message = "Erro no sistema, tente novamente")
+                    }
+
+                    authenticate()
+                }
+            } catch (t: Throwable) {
+                _uiStateMainActivity.update {
+                    it.copy(message = t.message.toString())
+                }
+            }
+        }
+    }
+
+    private fun handleBusStopByLineCodeResponse(response: Response<List<BusStop>>) {
+
+        if (response.isSuccessful) {
+            response.body()?.let { busStopList ->
+
+                _uiStateMapFragment.update {
+                    it.copy(
+                        currentBusStop = busStopList.ifEmpty {
+                            emptyList()
+                        }
+                    )
+                }
+
+                _uiStateMainActivity.update {
+                    it.copy(currentQuantityBusStop = busStopList.size)
+                }
+            }
+        } else {
+
+            _uiStateMainActivity.update {
+                it.copy(message = "Não foi possivel carregar ônibus, tente novamente")
+            }
+        }
+    }
+
 
     /** Função para realizar a autenticação da API OLHO VIVO
      * no try e catch realizo a requisição e caso a api seja autenticada com sucesso
@@ -272,7 +331,17 @@ class OnibusSpViewModel @Inject constructor(
     /** Função para limpar o letreiro completo atual*/
     fun clearLineCode() {
         _uiStateMainActivity.update {
-            it.copy(currentLineCod = START_CURRENT_LINE_CODE)
+            it.copy(
+                currentLineCod = START_CURRENT_LINE_CODE,
+                currentQuantityBusStop = START_QUANTITY_BUS_STOP,
+                currentQuantityBus = START_QUANTITY_BUS
+            )
+        }
+        _uiStateMapFragment.update {
+            it.copy(
+                currentBuses = emptyList(),
+                currentBusStop = emptyList()
+            )
         }
     }
 
@@ -421,12 +490,14 @@ class OnibusSpViewModel @Inject constructor(
         }
     }
 
+
 }
 
 /** Data class para representar o estado de UI do Map Fragment */
 data class UiStateMapFragment(
     val isLoading: Boolean = false,
     val currentBuses: List<BusWithLine> = emptyList(),
+    val currentBusStop: List<BusStop> = emptyList(),
     val zoomCurrentBuses: Boolean = false,
     val currentLocationUser: LatLng = START_CURRENT_LOCATION_USER,
     val focusUser: Boolean = false
@@ -436,9 +507,12 @@ data class UiStateMapFragment(
 data class UiStateMainActivity(
     val message: String = START_MESSAGE,
     val currentLineCod: String = START_CURRENT_LINE_CODE,
-    val currentQuantityBus: Int = START_BUS_ROUTE,
+    val currentQuantityBus: Int = START_QUANTITY_BUS,
+    val currentQuantityBusStop: Int = START_QUANTITY_BUS_STOP,
     val favoriteBuses: List<BusRoute> = emptyList()
 )
+
+
 
 
 

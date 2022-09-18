@@ -9,11 +9,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/app_bar_layout"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        style="@style/Widget.Material3.CardView.Elevated"
-        app:cardElevation="@dimen/ten">
+        app:cardCornerRadius="@dimen/zero"
+        app:cardElevation="@dimen/eight">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout"
@@ -27,11 +28,8 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/five"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:clickable="false"
-                android:duplicateParentState="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:elevation="@dimen/ten"
-                android:focusable="false"
                 android:src="@drawable/ic_arrow_back_home"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +37,6 @@
 
 
             <EditText
-                android:elevation="@dimen/ten"
                 android:id="@+id/editText_search_route"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/forty_dp"
@@ -47,6 +44,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/five"
                 android:background="@drawable/textview_round"
+                android:elevation="@dimen/ten"
                 android:focusedByDefault="true"
                 android:hint="@string/hint_route"
                 android:paddingStart="@dimen/margin_default"

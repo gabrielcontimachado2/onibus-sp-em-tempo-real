@@ -35,13 +35,13 @@ class RouteBusSearchDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
+        setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
 
     }
 
     override fun onStart() {
         super.onStart()
-        val d: Dialog? = dialog
+        val d = dialog
         if (d != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.MATCH_PARENT
@@ -84,6 +84,7 @@ class RouteBusSearchDialogFragment : DialogFragment() {
     private fun selectTheBusRoute() {
         busRouteAdapter.setonCardClickListener { busRoute ->
             viewModel.getBusRouteSelected("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}")
+            viewModel.getBusStopByLineCode(busRoute.lineCod)
             dismissAllowingStateLoss()
         }
     }
@@ -92,6 +93,7 @@ class RouteBusSearchDialogFragment : DialogFragment() {
     private fun backHome() {
         binding.imageButtonBackHome.setOnClickListener {
             dismiss()
+            onDestroyView()
         }
     }
 

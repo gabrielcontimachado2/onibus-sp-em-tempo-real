@@ -9,8 +9,7 @@ import com.conti.onibusspemtemporeal.data.models.BusWithLine
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-
-class MarkerInfoWindowAdapter(
+class MarkerInfoWindowBusAdapter(
     private val context: Context
 ) : GoogleMap.InfoWindowAdapter {
 
@@ -30,10 +29,10 @@ class MarkerInfoWindowAdapter(
         ).text = bus.prefixBus.toString()
         view.findViewById<TextView>(
             R.id.textView_origin_from_api
-        ).text = bus.origin
+        ).text = bus.origin.lowercase().replaceFirstChar { it.uppercase() }
         view.findViewById<TextView>(
             R.id.textView_destiny_from_api
-        ).text = bus.destiny
+        ).text = bus.destiny.lowercase().replaceFirstChar { it.uppercase() }
         view.findViewById<TextView>(
             R.id.textView_acessible_from_api
         ).text = if (bus.accessibleBus) {

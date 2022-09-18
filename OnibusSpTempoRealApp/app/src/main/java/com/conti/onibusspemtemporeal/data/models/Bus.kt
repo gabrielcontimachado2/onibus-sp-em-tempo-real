@@ -6,6 +6,8 @@ import java.io.Serializable
 data class Bus(
     @SerializedName("p")
     val prefixBus: Int,
+    @SerializedName("t")
+    val busArrivalForecast: String?,
     @SerializedName("a")
     val acessibleBus: Boolean,
     @SerializedName("ta")

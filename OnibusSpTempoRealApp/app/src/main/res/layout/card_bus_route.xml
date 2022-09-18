@@ -15,7 +15,7 @@
         android:layout_height="70dp">
 
         <ImageView
-            android:id="@+id/imageView_bus"
+            android:id="@+id/imageView_bus_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_default"
@@ -61,19 +61,20 @@
             android:contentDescription="TODO"
             android:text="@string/origin"
             app:layout_constraintBottom_toTopOf="@+id/textView_destiny_static"
-            app:layout_constraintStart_toEndOf="@id/imageView_bus"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_destiny_static"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twelve_dp"
             android:layout_marginBottom="@dimen/five"
             android:contentDescription="TODO"
             android:text="@string/destiny"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/textView_origin_static"
-            app:layout_constraintStart_toStartOf="@id/textView_origin_static"
+            app:layout_constraintStart_toStartOf="@+id/textView_origin_static"
             app:layout_constraintTop_toBottomOf="@id/textView_origin_static" />
 
         <TextView
@@ -102,9 +103,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/imageView_bus"
-            app:layout_constraintEnd_toEndOf="@id/imageView_bus"
-            app:layout_constraintStart_toStartOf="@id/imageView_bus"
+            app:layout_constraintBottom_toTopOf="@id/imageView_bus_stop"
+            app:layout_constraintEnd_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintStart_toStartOf="@id/imageView_bus_stop"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1273-10" />
 

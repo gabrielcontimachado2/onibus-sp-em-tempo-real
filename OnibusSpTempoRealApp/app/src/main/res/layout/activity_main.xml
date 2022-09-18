@@ -187,6 +187,7 @@
         android:layout_marginBottom="@dimen/margin_default"
         android:elevation="@dimen/ten"
         android:textAlignment="center"
+        android:textColor="@color/gray_light"
         android:textSize="@dimen/font_size_sixteen"
         app:chipBackgroundColor="@color/white"
         app:chipEndPadding="@dimen/five"
@@ -198,6 +199,24 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="3" />
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_quantity_bus_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:elevation="@dimen/ten"
+        android:textAlignment="center"
+        android:textColor="@color/gray_light"
+        android:textSize="@dimen/font_size_sixteen"
+        app:chipBackgroundColor="@color/white"
+        app:chipEndPadding="@dimen/five"
+        app:chipIcon="@drawable/ic_bus_stop_big_chip"
+        app:chipIconSize="@dimen/margin_sixteen_dp"
+        app:chipStartPadding="@dimen/five"
+        app:iconStartPadding="@dimen/three"
+        app:layout_constraintBottom_toTopOf="@id/chip_quantity_bus"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="3" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_options_app"
@@ -208,6 +227,7 @@
         android:contentDescription="@string/description_floating_button_option_app"
         android:focusable="true"
         android:src="@drawable/ic_options"
+        android:textColor="@color/gray_light"
         android:tint="@color/gray_light"
         app:backgroundTint="@color/white"
         app:elevation="@dimen/ten"

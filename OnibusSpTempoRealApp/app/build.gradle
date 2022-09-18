@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.conti.onibusspemtemporeal"
-        minSdk 24
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -60,7 +60,8 @@ dependencies {
     //Google maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     //Google maps para utilizar cluster
-    implementation 'com.google.maps.android:android-maps-utils:2.2.0'
+    implementation 'com.google.maps.android:android-maps-utils:2.4.0'
+
 
     //Dagger Hilt
     def dagger_hilt_version = "2.42"

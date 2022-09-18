@@ -22,5 +22,10 @@
         android:name="com.conti.onibusspemtemporeal.ui.fragments.route.RouteBusSearchDialogFragment"
         android:label="RouteBusSearchDialogFragment" />
 
+    <dialog
+        android:id="@+id/busStopDialogFragment"
+        android:name="com.conti.onibusspemtemporeal.ui.fragments.busStop.BusStopDialogFragment"
+        android:label="BusStopDialogFragment" />
+
 
 </navigation>

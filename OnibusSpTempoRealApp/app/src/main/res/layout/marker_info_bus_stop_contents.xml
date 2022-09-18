@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_inside_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/linear_layout_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView_bus_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_bus_stop_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_stop_name_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text="@string/bus_stop_name"
+            android:textSize="@dimen/font_size_fourteen"
+            app:layout_constraintBottom_toBottomOf="@id/imageView_bus_stop"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toTopOf="@id/imageView_bus_stop" />
+
+        <TextView
+            android:id="@+id/textView_stop_name_from_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:inputType="textMultiLine"
+            android:textSize="@dimen/font_size_fourteen"
+            app:layout_constraintBottom_toBottomOf="@id/imageView_bus_stop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textView_stop_name_static"
+            app:layout_constraintTop_toTopOf="@id/imageView_bus_stop"
+            tools:text="AFONSO BRAZ B/C1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView_address_bus_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:contentDescription="TODO"
+        android:src="@drawable/ic_addres_bus_stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint_inside_layout" />
+
+    <TextView
+        android:id="@+id/textView_address_bus_stop_static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address_bus_stop"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_address_bus_stop"
+        app:layout_constraintStart_toEndOf="@id/imageView_address_bus_stop"
+        app:layout_constraintTop_toTopOf="@+id/imageView_address_bus_stop" />
+
+    <TextView
+        android:id="@+id/textView_address_bus_stop_from_api"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_address_bus_stop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView_address_bus_stop_static"
+        app:layout_constraintTop_toTopOf="@+id/imageView_address_bus_stop"
+        tools:text="R ARMINDA/ R BALTHAZAR DA VEIGA" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
