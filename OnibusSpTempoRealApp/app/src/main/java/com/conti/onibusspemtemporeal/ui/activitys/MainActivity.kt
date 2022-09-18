@@ -51,8 +51,6 @@ class MainActivity : AppCompatActivity() {
         setupChipSelectCategory()
         setupChipQuantityBus()
         setupFloatingCurrentLocationButton()
-        refresh()
-
     }
 
     /** Função para quando o chip de quantity bus receber um click, chama a função de da o zoom no onibus*/
@@ -73,9 +71,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     /** Função para atualizar os ônibus chamando a função getBus do viewModel*/
-    private fun refresh() {
+    private fun refresh(currentLineCod: String) {
         binding.floatingRefreshBus.setOnClickListener {
-            viewModel.getBus()
+            if (currentLineCod.isNotEmpty()) {
+                viewModel.getBusRouteSelected(currentLineCod)
+            } else {
+                Toast.makeText(this, R.string.messageLineEmpty, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -122,6 +124,11 @@ class MainActivity : AppCompatActivity() {
 
                     binding.chipQuantityBus.text = uiStateMainActivity.currentQuantityBus.toString()
 
+                    binding.chipQuantityBusStop.text =
+                        uiStateMainActivity.currentQuantityBusStop.toString()
+
+                    refresh(uiStateMainActivity.currentLineCod)
+
                     when {
                         uiStateMainActivity.message.isNotEmpty() -> {
                             Toast.makeText(
@@ -134,12 +141,13 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         uiStateMainActivity.currentLineCod.isNotEmpty() -> {
-                            setChipCurrentLine(uiStateMainActivity.currentLineCod)
+                            setupChipCurrentLine(uiStateMainActivity.currentLineCod)
                         }
 
                         uiStateMainActivity.favoriteBuses.isNotEmpty() -> {
                             setupPopupmenuFavorite(uiStateMainActivity.favoriteBuses)
                         }
+
 
                     }
                 }
@@ -151,7 +159,7 @@ class MainActivity : AppCompatActivity() {
      * torna o chip visivel e com a [currentLineCod] coloco no .text do chip
      * caso o botao do close for clickado, chip fica invisvel e chamo duas funções do viewmodel
      * retirar a linha atual, e pedir pra buscar todos so ônibus*/
-    private fun setChipCurrentLine(currentLineCod: String) {
+    private fun setupChipCurrentLine(currentLineCod: String) {
 
         with(binding.chipLineSelected) {
 
@@ -161,7 +169,6 @@ class MainActivity : AppCompatActivity() {
             setOnCloseIconClickListener {
                 it.isInvisible = true
                 viewModel.clearLineCode()
-                viewModel.getBus()
             }
 
         }

@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView_bus"
+            android:id="@+id/imageView_bus_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
@@ -34,9 +34,9 @@
             android:layout_marginStart="@dimen/five"
             android:text="@string/bus"
             android:textSize="@dimen/font_size_fourteen"
-            app:layout_constraintBottom_toBottomOf="@id/imageView_bus"
-            app:layout_constraintStart_toEndOf="@id/imageView_bus"
-            app:layout_constraintTop_toTopOf="@id/imageView_bus" />
+            app:layout_constraintBottom_toBottomOf="@id/imageView_bus_stop"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toTopOf="@id/imageView_bus_stop" />
 
         <TextView
             android:id="@+id/textView_placard_static"

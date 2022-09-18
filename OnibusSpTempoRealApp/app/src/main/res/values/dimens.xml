@@ -18,5 +18,7 @@
     <dimen name="four">4dp</dimen>
     <dimen name="font_size_five">5sp</dimen>
     <dimen name="font_size_fourteen">14sp</dimen>
+    <dimen name="twelve_dp">12dp</dimen>
     <dimen name="font_size_ten">10sp</dimen>
+    <dimen name="eight">8dp</dimen>
 </resources>
