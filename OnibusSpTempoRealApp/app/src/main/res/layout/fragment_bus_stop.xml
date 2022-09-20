@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragments.busStop.BusStopDialogFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -13,7 +14,10 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/zero"
-        app:cardElevation="@dimen/eight">
+        app:cardElevation="@dimen/eight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout"
@@ -50,4 +54,82 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout>
+    <include
+        android:id="@+id/layout_chip_group"
+        layout="@layout/layout_chip_group_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
+
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/bus_route"
+        android:textSize="@dimen/font_size_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_chip_group" />
+
+    <TextView
+        android:id="@+id/textView_last_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:textSize="@dimen/font_size_ten"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_title"
+        tools:text="Última atualização : 15:00" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recylerView_bus_arrival_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_last_update"
+        tools:listitem="@layout/card_bus_arrival_forecast" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_refresh_bus_arrival_forecast"
+        android:layout_width="@dimen/forty_eight"
+        android:layout_height="@dimen/forty_eight"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default_one"
+        android:clickable="true"
+        android:contentDescription="@string/description_floating_button_refresh"
+        android:focusable="true"
+        android:src="@drawable/ic_baseline_refresh_24"
+        android:tint="@color/gray_light"
+        app:backgroundTint="@color/teal_200"
+        app:elevation="@dimen/ten"
+        app:fabCustomSize="@dimen/forty_eight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_loading_bus_arrival_forecast"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/black"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

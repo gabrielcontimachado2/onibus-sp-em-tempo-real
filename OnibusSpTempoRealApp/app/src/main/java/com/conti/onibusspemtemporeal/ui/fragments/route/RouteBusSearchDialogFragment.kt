@@ -1,7 +1,6 @@
 package com.conti.onibusspemtemporeal.ui.fragments.route
 
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conti.onibusspemtemporeal.R
@@ -23,7 +19,6 @@ import com.conti.onibusspemtemporeal.ui.adapter.BusRouteAdapter
 import com.conti.onibusspemtemporeal.ui.viewModel.OnibusSpViewModel
 import com.conti.onibusspemtemporeal.util.retrofitHandling.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RouteBusSearchDialogFragment : DialogFragment() {
@@ -83,7 +78,7 @@ class RouteBusSearchDialogFragment : DialogFragment() {
     /** Função para selecionar uma linha de ônibus*/
     private fun selectTheBusRoute() {
         busRouteAdapter.setonCardClickListener { busRoute ->
-            viewModel.getBusRouteSelected("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}")
+            viewModel.getBusRouteSelected("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}", busRoute.lineWay)
             viewModel.getBusStopByLineCode(busRoute.lineCod)
             dismissAllowingStateLoss()
         }

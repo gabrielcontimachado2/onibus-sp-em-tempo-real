@@ -9,17 +9,17 @@ import com.conti.onibusspemtemporeal.databinding.CardBusRouteBinding
 import com.conti.onibusspemtemporeal.util.DiffUtilBusRoute
 
 class BusRouteAdapter :
-    ListAdapter<BusRoute, BusRouteAdapter.BusRouteViewModel>(DiffUtilBusRoute()) {
+    ListAdapter<BusRoute, BusRouteAdapter.BusRouteViewHolder>(DiffUtilBusRoute()) {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusRouteViewModel {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusRouteViewHolder {
         val binding =
             CardBusRouteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return BusRouteViewModel(binding)
+        return BusRouteViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BusRouteViewModel, position: Int) {
+    override fun onBindViewHolder(holder: BusRouteViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
@@ -35,7 +35,7 @@ class BusRouteAdapter :
         onImageFavoriteClickListener = listener
     }
 
-    inner class BusRouteViewModel(private val binding: CardBusRouteBinding) :
+    inner class BusRouteViewHolder(private val binding: CardBusRouteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(busRoute: BusRoute) {

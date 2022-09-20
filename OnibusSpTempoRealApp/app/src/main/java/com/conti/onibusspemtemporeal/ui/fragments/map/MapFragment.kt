@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.conti.onibusspemtemporeal.R
 import com.conti.onibusspemtemporeal.data.models.BusStop
 import com.conti.onibusspemtemporeal.data.models.BusWithLine
@@ -170,8 +173,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         clusterManagerBusStop.setOnClusterItemInfoWindowClickListener { busStop ->
             Toast.makeText(requireContext(), "bus stop : ${busStop.stopCod}", Toast.LENGTH_LONG)
                 .show()
-            val busStopDialogFragment = BusStopDialogFragment()
-            busStopDialogFragment.show(childFragmentManager, "bus_stop_dialog_fragment")
+
+            val bundle = bundleOf("stop" to busStop.stopCod)
+            findNavController().navigate(
+                R.id.busStopDialogFragment,
+                bundle
+            )
         }
 
     }

@@ -27,31 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- desisti dessa opcao as setas não s
-              <ImageView
-                  android:id="@+id/imageView_arrow_destiny"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/margin_default"
-                  android:layout_marginTop="@dimen/five"
-                  android:contentDescription="TODO"
-                  android:src="@drawable/ic_arrow_destiny"
-                  app:layout_constraintBottom_toTopOf="@+id/imageView_arrow_origin"
-                  app:layout_constraintStart_toEndOf="@id/imageView_bus"
-                  app:layout_constraintTop_toTopOf="parent" />
-
-              <ImageView
-                  android:id="@+id/imageView_arrow_origin"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:contentDescription="TODO"
-                  android:src="@drawable/ic_arrow_origin_blue"
-                  app:layout_constraintBottom_toBottomOf="@id/imageView_bus"
-                  app:layout_constraintEnd_toEndOf="@id/imageView_arrow_destiny"
-                  app:layout_constraintStart_toStartOf="@id/imageView_arrow_destiny"
-                  app:layout_constraintTop_toBottomOf="@id/imageView_arrow_destiny" />
-
-       -->
         <TextView
             android:id="@+id/textView_origin_static"
             android:layout_width="wrap_content"

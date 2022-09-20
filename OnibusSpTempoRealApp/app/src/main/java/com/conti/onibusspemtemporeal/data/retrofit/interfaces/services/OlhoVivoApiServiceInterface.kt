@@ -25,9 +25,10 @@ interface OlhoVivoApiServiceInterface {
         lineCod: Int
     ): Response<List<BusStop>>
 
-    @GET("/Previsao/Parada")
+    @GET("Previsao/Parada")
     suspend fun getBusArrivalForecastByBusStop(
         @Query("codigoParada")
         busStopCod: Int
     ): Response<ResponseBusArrivalForecast>
+
 }

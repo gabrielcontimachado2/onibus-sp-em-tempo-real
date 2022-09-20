@@ -20,12 +20,16 @@
     <dialog
         android:id="@+id/routeBusSearchDialogFragment"
         android:name="com.conti.onibusspemtemporeal.ui.fragments.route.RouteBusSearchDialogFragment"
-        android:label="RouteBusSearchDialogFragment" />
-
+        android:label="RouteBusSearchDialogFragment"/>
     <dialog
         android:id="@+id/busStopDialogFragment"
         android:name="com.conti.onibusspemtemporeal.ui.fragments.busStop.BusStopDialogFragment"
-        android:label="BusStopDialogFragment" />
+        android:label="fragment_bus_stop"
+        tools:layout="@layout/fragment_bus_stop" >
+        <argument
+            android:name="stop"
+            app:argType="integer" />
+    </dialog>
 
 
 </navigation>

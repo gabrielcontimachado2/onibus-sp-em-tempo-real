@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class BusRouteWithBus(
-
     @SerializedName("c")
     val fullPlacard: String,
     @SerializedName("cl")
@@ -19,5 +18,4 @@ data class BusRouteWithBus(
     val amountBusFound: Int,
     @SerializedName("vs")
     val buses: List<Bus>
-
-): Serializable
+) : Serializable

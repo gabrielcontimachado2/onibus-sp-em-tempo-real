@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.conti.onibusspemtemporeal.data.models.BusRoute
-import com.conti.onibusspemtemporeal.data.models.BusStop
-import com.conti.onibusspemtemporeal.data.models.BusWithLine
-import com.conti.onibusspemtemporeal.data.models.ResponseAllBus
+import com.conti.onibusspemtemporeal.data.models.*
 import com.conti.onibusspemtemporeal.domain.apiRepository.OlhoVivoApiRepository
 import com.conti.onibusspemtemporeal.domain.roomRepository.RoomRepository
 import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LINE_CODE
 import com.conti.onibusspemtemporeal.util.Constants.START_CURRENT_LOCATION_USER
+import com.conti.onibusspemtemporeal.util.Constants.START_HOUR_UPDATE
+import com.conti.onibusspemtemporeal.util.Constants.START_LINE_WAY
 import com.conti.onibusspemtemporeal.util.Constants.START_MESSAGE
 import com.conti.onibusspemtemporeal.util.Constants.START_QUANTITY_BUS
 import com.conti.onibusspemtemporeal.util.Constants.START_QUANTITY_BUS_STOP
@@ -49,6 +48,11 @@ class OnibusSpViewModel @Inject constructor(
         MutableStateFlow(UiStateMapFragment())
     val uiStateMapFragment: StateFlow<UiStateMapFragment>
         get() = _uiStateMapFragment.asStateFlow()
+
+    private val _uiStateBusStopDialogFragment: MutableStateFlow<UiStateBusStopDialogFragment> =
+        MutableStateFlow(UiStateBusStopDialogFragment())
+    val uiStateBusStopDialogFragment: StateFlow<UiStateBusStopDialogFragment>
+        get() = _uiStateBusStopDialogFragment.asStateFlow()
 
 
     init {
@@ -351,10 +355,13 @@ class OnibusSpViewModel @Inject constructor(
      * verifico se já estou logado, caso sim, a requisição é feita e enviada para classe [handleBusRoutersResponseAndFilter]
      * para fazer a manipulação da response filtrar e atualizar o [_uiStateMapFragment] com o novo valor de lista de onibus com relação a linha
      * caso seja pego algum throwable durante a execução atualizo o [_uiStateMapFragment] com mensagem de erro*/
-    fun getBusRouteSelected(fullPlacard: String) {
+    fun getBusRouteSelected(fullPlacard: String, routeWay: Int) {
 
         _uiStateMainActivity.update {
-            it.copy(currentLineCod = fullPlacard)
+            it.copy(
+                currentLineCod = fullPlacard,
+                currentLineWay = routeWay
+            )
         }
 
         viewModelScope.launch {
@@ -368,7 +375,7 @@ class OnibusSpViewModel @Inject constructor(
 
                     val response = apiRepository.getAllBus()
 
-                    handleBusRoutersResponseAndFilter(response)
+                    handleBusRoutersResponseAndFilter(response, routeWay)
 
                     _uiStateMapFragment.update {
                         it.copy(isLoading = false)
@@ -400,36 +407,58 @@ class OnibusSpViewModel @Inject constructor(
      *  e verifico qual linha tem o letreiro completo igual ao letreiro atual da [_uiStateMapFragment], quando forem iguais,
      *  crio uma lista para armazernar todos os ônibus dessa linha, após armazenar todos eles, atualizo o [_uiStateMapFragment], com o valor da [curentListBusWithRoute]
      *  finalizo o if retornando Resourcer.Sucess, caso não tenha entrado no if retorno Resource.Error*/
-    private fun handleBusRoutersResponseAndFilter(response: Response<ResponseAllBus>) {
+    private fun handleBusRoutersResponseAndFilter(
+        response: Response<ResponseAllBus>,
+        routeWay: Int
+    ) {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
 
                 //Para saber se a linha que está sendo buscada, tem algum ônibus em circulação
                 var lineSearchExist = false
+                val currentListBusWithRoute: MutableList<BusWithLine> = mutableListOf()
 
-                for (line in resultResponse.lineRelation) {
-                    if (line.fullPlacard == _uiStateMainActivity.value.currentLineCod) {
+                resultResponse.lineRelation.forEach { busRouteWithBus ->
+                    if (busRouteWithBus.fullPlacard == _uiStateMainActivity.value.currentLineCod && busRouteWithBus.lineWay == routeWay) {
 
                         lineSearchExist = true
 
-                        val currentListBusWithRoute: MutableList<BusWithLine> = mutableListOf()
+                        busRouteWithBus.buses.forEach { bus ->
 
-                        line.buses.forEach { bus ->
+                            if (busRouteWithBus.lineWay == 1) {
 
-                            val latLng = LatLng(bus.latBus, bus.longBus)
+                                val latLng = LatLng(bus.latBus, bus.longBus)
 
-                            val busWithLine = BusWithLine(
-                                line.fullPlacard,
-                                bus.prefixBus,
-                                line.originPlacard,
-                                line.destinyPlacard,
-                                bus.acessibleBus,
-                                resultResponse.hourGet,
-                                latLng,
-                                line.lineCod
-                            )
+                                val busWithLine = BusWithLine(
+                                    busRouteWithBus.fullPlacard,
+                                    bus.prefixBus,
+                                    busRouteWithBus.destinyPlacard,
+                                    busRouteWithBus.originPlacard,
+                                    bus.acessibleBus,
+                                    resultResponse.hourGet,
+                                    latLng,
+                                    busRouteWithBus.lineCod
+                                )
 
-                            currentListBusWithRoute.add(busWithLine)
+                                currentListBusWithRoute.add(busWithLine)
+
+                            } else {
+
+                                val latLng = LatLng(bus.latBus, bus.longBus)
+
+                                val busWithLine = BusWithLine(
+                                    busRouteWithBus.fullPlacard,
+                                    bus.prefixBus,
+                                    busRouteWithBus.originPlacard,
+                                    busRouteWithBus.destinyPlacard,
+                                    bus.acessibleBus,
+                                    resultResponse.hourGet,
+                                    latLng,
+                                    busRouteWithBus.lineCod
+                                )
+
+                                currentListBusWithRoute.add(busWithLine)
+                            }
                         }
 
                         _uiStateMapFragment.update {
@@ -440,8 +469,9 @@ class OnibusSpViewModel @Inject constructor(
                         }
 
                         _uiStateMainActivity.update {
-                            it.copy(currentQuantityBus = line.amountBusFound)
+                            it.copy(currentQuantityBus = busRouteWithBus.amountBusFound)
                         }
+
                     }
                 }
 
@@ -454,6 +484,93 @@ class OnibusSpViewModel @Inject constructor(
         } else {
             _uiStateMainActivity.update {
                 it.copy(message = "Não foi possivel carregar ônibus, tente novamente")
+            }
+        }
+    }
+
+
+    fun getBusArrivalForecastByBusStop(busStopCod: Int) {
+        viewModelScope.launch {
+
+            _uiStateBusStopDialogFragment.update {
+                it.copy(isLoading = true)
+            }
+
+            try {
+                if (_authenticate.value!!) {
+
+                    val response = apiRepository.getBusArrivalForecastByBusStop(busStopCod)
+
+                    handleBusArrivalForecast(response)
+
+
+                } else {
+
+                    _uiStateBusStopDialogFragment.update {
+                        it.copy(message = "Verfique sua conexão, o aplicativo não funciona sem internet ")
+                    }
+
+                    authenticate()
+
+                }
+            } catch (t: Throwable) {
+
+            }
+        }
+    }
+
+    private fun handleBusArrivalForecast(response: Response<ResponseBusArrivalForecast>) {
+        if (response.isSuccessful) {
+
+            val currentListBusArrivalForecast: MutableList<BusWithArrivalForecast> = mutableListOf()
+
+            response.body()?.let { responseBusArrivalForecast ->
+                responseBusArrivalForecast.busStopWithLineAndBus.busRouteWithBus.forEach { busRoute ->
+                    for (bus in busRoute.buses) {
+
+                        if (busRoute.lineWay == 1) {
+
+                            val busWithArrivalForecast = BusWithArrivalForecast(
+                                busRoute.fullPlacard,
+                                busRoute.originPlacard,
+                                bus.busArrivalForecast!!,
+                                bus.prefixBus,
+                                bus.acessibleBus
+                            )
+
+                            currentListBusArrivalForecast.add(busWithArrivalForecast)
+
+                        } else {
+
+                            val busWithArrivalForecast = BusWithArrivalForecast(
+                                busRoute.fullPlacard,
+                                busRoute.destinyPlacard,
+                                bus.busArrivalForecast!!,
+                                bus.prefixBus,
+                                bus.acessibleBus
+                            )
+
+                            currentListBusArrivalForecast.add(busWithArrivalForecast)
+                        }
+                    }
+
+                }
+
+                _uiStateBusStopDialogFragment.update {
+                    it.copy(
+                        isLoading = false,
+                        currentBusesArrivalForecast = currentListBusArrivalForecast,
+                        lastHourUpdate = responseBusArrivalForecast.hourRefer
+                    )
+                }
+            }
+        } else {
+
+            _uiStateBusStopDialogFragment.update {
+                it.copy(
+                    isLoading = false,
+                    message = "Não foi possivel carregar nenhuma previsão para essa parada"
+                )
             }
         }
     }
@@ -490,6 +607,13 @@ class OnibusSpViewModel @Inject constructor(
         }
     }
 
+    /** Função para limpar as mensagens do [_uiStateMapFragment]*/
+    fun clearMessageBusArrivalUi() {
+        _uiStateBusStopDialogFragment.update {
+            it.copy(message = START_MESSAGE)
+        }
+    }
+
 
 }
 
@@ -507,11 +631,19 @@ data class UiStateMapFragment(
 data class UiStateMainActivity(
     val message: String = START_MESSAGE,
     val currentLineCod: String = START_CURRENT_LINE_CODE,
+    val currentLineWay: Int = START_LINE_WAY,
     val currentQuantityBus: Int = START_QUANTITY_BUS,
     val currentQuantityBusStop: Int = START_QUANTITY_BUS_STOP,
     val favoriteBuses: List<BusRoute> = emptyList()
 )
 
+/** Data class para representar o estado de UI da Main Activity */
+data class UiStateBusStopDialogFragment(
+    val isLoading: Boolean = false,
+    val message: String = START_MESSAGE,
+    val lastHourUpdate: String = START_HOUR_UPDATE,
+    val currentBusesArrivalForecast: List<BusWithArrivalForecast> = emptyList()
+)
 
 
 

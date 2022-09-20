@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_bus_route"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/zero"
+    app:cardElevation="@dimen/ten">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_bus_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/ten"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_bus_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_placard_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/imageView_bus_stop"
+            app:layout_constraintEnd_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintStart_toStartOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1273-10" />
+
+        <TextView
+            android:id="@+id/textView_destiny_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_one"
+            android:layout_marginTop="@dimen/eight"
+            android:text="@string/destiny_arrival"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_destiny_from_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_destiny_static"
+            app:layout_constraintStart_toEndOf="@id/textView_destiny_static"
+            app:layout_constraintTop_toTopOf="@+id/textView_destiny_static"
+            tools:text="TERM. JD. ANGELA" />
+
+        <TextView
+            android:id="@+id/textView_bus_arrival_forecast_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_one"
+            android:layout_marginTop="@dimen/three"
+            android:text="@string/arrival_forecast"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toBottomOf="@id/textView_destiny_static" />
+
+        <TextView
+            android:id="@+id/textView_bus_arrival_forecast_from_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_bus_arrival_forecast_static"
+            app:layout_constraintStart_toEndOf="@id/textView_bus_arrival_forecast_static"
+            app:layout_constraintTop_toTopOf="@id/textView_bus_arrival_forecast_static"
+            tools:text="15:10" />
+
+        <TextView
+            android:id="@+id/textView_bus_prefix_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_one"
+            android:layout_marginTop="@dimen/three"
+            android:layout_marginBottom="@dimen/eight"
+            android:text="@string/prefix"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toBottomOf="@id/textView_bus_arrival_forecast_static" />
+
+        <TextView
+            android:id="@+id/textView_bus_prefix_from_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/three"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_bus_prefix_static"
+            app:layout_constraintStart_toEndOf="@id/textView_bus_prefix_static"
+            app:layout_constraintTop_toBottomOf="@id/textView_bus_arrival_forecast_static"
+            tools:text="15230" />
+
+        <TextView
+            android:id="@+id/textView_accessible_bus_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_one"
+            android:layout_marginTop="@dimen/three"
+            android:layout_marginBottom="@dimen/eight"
+            android:text="@string/acessible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView_bus_stop"
+            app:layout_constraintTop_toBottomOf="@id/textView_bus_prefix_static" />
+
+        <TextView
+            android:id="@+id/textView_accessible_bus_from_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/three"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_accessible_bus_static"
+            app:layout_constraintStart_toEndOf="@id/textView_accessible_bus_static"
+            app:layout_constraintTop_toBottomOf="@id/textView_bus_prefix_static"
+            tools:text="sim" />
+
+        <ImageButton
+            android:id="@+id/imageButton_favorite_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_baseline_location_on_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@color/gray_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

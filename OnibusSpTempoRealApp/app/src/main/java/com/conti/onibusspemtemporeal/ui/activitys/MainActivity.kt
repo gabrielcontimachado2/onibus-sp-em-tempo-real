@@ -17,6 +17,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.conti.onibusspemtemporeal.R
 import com.conti.onibusspemtemporeal.data.models.BusRoute
 import com.conti.onibusspemtemporeal.databinding.ActivityMainBinding
@@ -46,12 +48,14 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+
         openSearchActivity()
         observerUiState()
         setupChipSelectCategory()
         setupChipQuantityBus()
         setupFloatingCurrentLocationButton()
     }
+
 
     /** Função para quando o chip de quantity bus receber um click, chama a função de da o zoom no onibus*/
     private fun setupChipQuantityBus() {
@@ -65,16 +69,15 @@ class MainActivity : AppCompatActivity() {
      * e aplicar o zoom ao primeiro ônibus dessa linha*/
     private fun setupChipSelectCategory() {
         binding.chipLineSelected.setOnClickListener {
-            viewModel.getBusRouteSelected(binding.chipLineSelected.text.toString())
             viewModel.zoomBus()
         }
     }
 
     /** Função para atualizar os ônibus chamando a função getBus do viewModel*/
-    private fun refresh(currentLineCod: String) {
+    private fun refresh(currentLineCod: String, routeWay: Int) {
         binding.floatingRefreshBus.setOnClickListener {
             if (currentLineCod.isNotEmpty()) {
-                viewModel.getBusRouteSelected(currentLineCod)
+                viewModel.getBusRouteSelected(currentLineCod, routeWay)
             } else {
                 Toast.makeText(this, R.string.messageLineEmpty, Toast.LENGTH_LONG).show()
             }
@@ -103,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
             popupMenu.setOnMenuItemClickListener { item ->
 
-                viewModel.getBusRouteSelected(item.toString())
+               // viewModel.getBusRouteSelected(item.toString())
 
                 true
             }
@@ -127,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                     binding.chipQuantityBusStop.text =
                         uiStateMainActivity.currentQuantityBusStop.toString()
 
-                    refresh(uiStateMainActivity.currentLineCod)
+                    refresh(uiStateMainActivity.currentLineCod, uiStateMainActivity.currentLineWay)
 
                     when {
                         uiStateMainActivity.message.isNotEmpty() -> {

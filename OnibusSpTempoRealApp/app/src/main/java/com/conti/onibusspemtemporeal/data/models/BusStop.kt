@@ -16,7 +16,6 @@ class BusStop(
     val stopLat: Double,
     @SerializedName("px")
     val stopLng: Double
-
 ) : Serializable, ClusterItem {
 
     override fun getPosition(): LatLng {

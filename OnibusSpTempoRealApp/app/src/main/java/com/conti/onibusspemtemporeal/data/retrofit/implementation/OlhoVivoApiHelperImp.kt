@@ -3,6 +3,7 @@ package com.conti.onibusspemtemporeal.data.retrofit.implementation
 import com.conti.onibusspemtemporeal.data.models.BusRoute
 import com.conti.onibusspemtemporeal.data.models.BusStop
 import com.conti.onibusspemtemporeal.data.models.ResponseAllBus
+import com.conti.onibusspemtemporeal.data.models.ResponseBusArrivalForecast
 import com.conti.onibusspemtemporeal.data.retrofit.interfaces.OlhoVivoApiInterface
 import com.conti.onibusspemtemporeal.data.retrofit.interfaces.services.OlhoVivoApiServiceInterface
 import retrofit2.Response
@@ -19,4 +20,8 @@ class OlhoVivoApiHelperImp @Inject constructor(
 
     override suspend fun getBusStopByLineCode(lineCod: Int): Response<List<BusStop>> =
         apiOlhoVivoApiService.getBusStopByLineCode(lineCod)
+
+    override suspend fun getBusArrivalForecastByBusStop(busStopCod: Int): Response<ResponseBusArrivalForecast> =
+        apiOlhoVivoApiService.getBusArrivalForecastByBusStop(busStopCod)
+
 }

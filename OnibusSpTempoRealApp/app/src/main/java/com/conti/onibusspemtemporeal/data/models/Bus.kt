@@ -1,7 +1,12 @@
 package com.conti.onibusspemtemporeal.data.models
 
+
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.time.LocalTime
+import java.time.ZoneId
+import java.util.*
+
 
 data class Bus(
     @SerializedName("p")
@@ -16,4 +21,4 @@ data class Bus(
     val latBus: Double,
     @SerializedName("px")
     val longBus: Double
-): Serializable
+) : Serializable

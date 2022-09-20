@@ -44,6 +44,10 @@
     <string name="address_bus_stop">Endereço :</string>
     <string name="messageLineEmpty">Selecione alguma linha antes de atualizar a localização dos ônibus, tente novamente!</string>
     <string name="previsao_chegada">Previsão De Chegada</string>
+    <string name="arrival_forecast">Previsão de chegada :</string>
+    <string name="destiny_arrival">Destino :</string>
+    <string name="prefix">Prefixo do ônibus :</string>
+    <string name="bus_route">Proximos ônibus</string>
 
 
 </resources>
