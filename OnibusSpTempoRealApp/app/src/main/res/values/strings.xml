@@ -48,6 +48,7 @@
     <string name="destiny_arrival">Destino :</string>
     <string name="prefix">Prefixo do ônibus :</string>
     <string name="bus_route">Proximos ônibus</string>
-
+    <string name="all">Tudo</string>
+    <string name="lastUpdate">Última atualização : %s</string>
 
 </resources>

@@ -10,6 +10,9 @@ object Constants {
     const val START_CURRENT_LINE_CODE = ""
     const val START_LINE_WAY = 0
     const val START_MESSAGE = ""
+    const val START_CHECKED = ""
+    const val START_STOP_NAME = ""
+    const val START_LAST_UPDATE = ""
     const val START_HOUR_UPDATE = ""
     val START_CURRENT_LOCATION_USER = LatLng(0.0, 0.0)
 }

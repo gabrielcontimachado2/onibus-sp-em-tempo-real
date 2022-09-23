@@ -59,39 +59,53 @@
         layout="@layout/layout_chip_group_route"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/five"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
 
 
     <TextView
+        android:id="@+id/textView_stop_name_static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:textSize="@dimen/font_size_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_chip_group"
+        tools:text="TERM. JD. ANGELA" />
+
+    <TextView
         android:id="@+id/textView_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:text="@string/bus_route"
-        android:textSize="@dimen/font_size_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/font_size_eighteen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_chip_group" />
+        app:layout_constraintTop_toBottomOf="@id/textView_stop_name_static" />
 
     <TextView
         android:id="@+id/textView_last_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/margin_default"
         android:layout_marginBottom="@dimen/margin_default"
         android:textSize="@dimen/font_size_ten"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_title"
         tools:text="Última atualização : 15:00" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylerView_bus_arrival_forecast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/five"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_last_update"
@@ -117,19 +131,20 @@
     <ProgressBar
         android:id="@+id/progressBar_loading_bus_arrival_forecast"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/ten"
         android:indeterminate="true"
         android:indeterminateTint="@color/black"
         android:indeterminateTintMode="src_atop"
+        android:layout_marginBottom="@dimen/five"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/textView_last_update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/textView_last_update" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

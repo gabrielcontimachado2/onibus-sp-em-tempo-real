@@ -24,4 +24,6 @@ class OlhoVivoApiHelperImp @Inject constructor(
     override suspend fun getBusArrivalForecastByBusStop(busStopCod: Int): Response<ResponseBusArrivalForecast> =
         apiOlhoVivoApiService.getBusArrivalForecastByBusStop(busStopCod)
 
+    override suspend fun getAllBusStop(termosBuscas: String): Response<List<BusStop>> =
+        apiOlhoVivoApiService.getAllBusStop(termosBuscas)
 }

@@ -9,7 +9,21 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#383838</color>
     <color name="gray_light">#808080</color>
+    <color name="gray_two_light">#fafafa</color>
     <color name="yellow">#F9FC7B</color>
 
 
+    <!-- palleta-->
+    <color name="primary">#6200ee</color>
+    <color name="primaryVariant">#3700b3</color>
+    <color name="secondary">#03dac6</color>
+    <color name="secondary_variant">#018786</color>
+    <color name="background">#ffffff</color>
+    <color name="surface">#ffffff</color>
+    <color name="error">#c51162</color>
+    <color name="onPrimary">#ffffff</color>
+    <color name="onSecondary">#000000</color>
+    <color name="onBackground">#000000</color>
+    <color name="onSurface">#000000</color>
+    <color name="onError">#ffffff</color>
 </resources>

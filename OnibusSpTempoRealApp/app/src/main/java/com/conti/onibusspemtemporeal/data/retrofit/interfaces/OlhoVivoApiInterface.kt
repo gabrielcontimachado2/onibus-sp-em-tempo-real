@@ -14,5 +14,9 @@ interface OlhoVivoApiInterface {
 
     suspend fun getBusStopByLineCode(lineCod: Int): Response<List<BusStop>>
 
+    suspend fun getAllBusStop(termosBuscas: String): Response<List<BusStop>>
+
     suspend fun getBusArrivalForecastByBusStop(busStopCod: Int): Response<ResponseBusArrivalForecast>
+
+
 }

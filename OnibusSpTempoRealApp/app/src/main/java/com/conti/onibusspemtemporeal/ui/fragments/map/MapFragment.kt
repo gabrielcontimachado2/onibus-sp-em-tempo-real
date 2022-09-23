@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -14,14 +13,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.conti.onibusspemtemporeal.R
 import com.conti.onibusspemtemporeal.data.models.BusStop
 import com.conti.onibusspemtemporeal.data.models.BusWithLine
 import com.conti.onibusspemtemporeal.databinding.FragmentMapBinding
 import com.conti.onibusspemtemporeal.ui.adapter.MarkerInfoWindowBusAdapter
 import com.conti.onibusspemtemporeal.ui.adapter.MarkerInfoWindowBusStopAdapter
-import com.conti.onibusspemtemporeal.ui.fragments.busStop.BusStopDialogFragment
 import com.conti.onibusspemtemporeal.ui.viewModel.OnibusSpViewModel
 import com.conti.onibusspemtemporeal.util.maps.BitmapHelper
 import com.conti.onibusspemtemporeal.util.maps.BusRenderer
@@ -98,9 +95,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             clusterManagerBuses.onCameraIdle()
             clusterManagerBusStop.onCameraIdle()
         }
-
     }
-
 
     /** Função para fazer o setup dos clusters, do ônibus e parada.
      *  Chamada de três funções para complementar todas as funcionalidades do cluster
@@ -116,7 +111,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         setupRenderer(clusterManagerBuses, clusterManagerBusStop, googleMap)
 
         setupWidowClickListener(clusterManagerBuses, clusterManagerBusStop)
-
     }
 
     /** Função para criar o widow Adapter um para cada cluster, utilizando o
@@ -163,18 +157,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ) {
 
         clusterManagerBuses.setOnClusterItemInfoWindowClickListener { busWithLine ->
-            Toast.makeText(
-                requireContext(),
-                "buses placar : ${busWithLine.lineCod}",
-                Toast.LENGTH_LONG
-            ).show()
+
         }
 
         clusterManagerBusStop.setOnClusterItemInfoWindowClickListener { busStop ->
-            Toast.makeText(requireContext(), "bus stop : ${busStop.stopCod}", Toast.LENGTH_LONG)
-                .show()
-
-            val bundle = bundleOf("stop" to busStop.stopCod)
+            val bundle = bundleOf("stop" to busStop.stopCod, "name" to busStop.stopName)
             findNavController().navigate(
                 R.id.busStopDialogFragment,
                 bundle
@@ -183,7 +170,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    /** Função para observar o estado da Ui do viewModel com todos os dados necessários para atualizar a Ui*/
+    /** Função para observar o estado da Ui no viewModel com todos os dados necessários para atualizar a Ui*/
     private fun observerUiState(
         clusterManagerBuses: ClusterManager<BusWithLine>,
         clusterManagerBusStop: ClusterManager<BusStop>,
@@ -208,7 +195,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     binding.progressBarLoadingBus.isVisible = uiState.isLoading
 
                     when {
-
                         uiState.currentBuses.isNotEmpty() && uiState.zoomCurrentBuses && !uiState.focusUser -> {
 
                             val firstBusLatLng = uiState.currentBuses.first().latLng
@@ -251,13 +237,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                             viewModel.offFocusUser()
                         }
-
-
                     }
-
                 }
             }
-
         }
     }
 

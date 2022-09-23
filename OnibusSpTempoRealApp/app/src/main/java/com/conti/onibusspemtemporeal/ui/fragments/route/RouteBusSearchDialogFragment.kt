@@ -79,6 +79,7 @@ class RouteBusSearchDialogFragment : DialogFragment() {
     private fun selectTheBusRoute() {
         busRouteAdapter.setonCardClickListener { busRoute ->
             viewModel.getBusRouteSelected("${busRoute.firstNumbersPlacard}-${busRoute.secondPartPlacard}", busRoute.lineWay)
+           // viewModel.getAllBusStop("")
             viewModel.getBusStopByLineCode(busRoute.lineCod)
             dismissAllowingStateLoss()
         }

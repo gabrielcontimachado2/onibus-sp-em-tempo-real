@@ -24,6 +24,9 @@ class OlhoVivoApiRepository @Inject constructor(
     suspend fun getBusStopByLineCode(lineCode: Int): Response<List<BusStop>> =
         olhoVivoApiHelperImp.getBusStopByLineCode(lineCode)
 
+    suspend fun getAllBusStop(termosBuscas: String): Response<List<BusStop>> =
+        olhoVivoApiHelperImp.getAllBusStop(termosBuscas)
+
     suspend fun getBusArrivalForecastByBusStop(busStopCod: Int): Response<ResponseBusArrivalForecast> =
         olhoVivoApiHelperImp.getBusArrivalForecastByBusStop(busStopCod)
 

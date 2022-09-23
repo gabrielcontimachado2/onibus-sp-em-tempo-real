@@ -9,6 +9,7 @@
     <dimen name="five">5dp</dimen>
     <dimen name="ten">10dp</dimen>
     <dimen name="font_size_sixteen">16sp</dimen>
+    <dimen name="font_size_eighteen">18sp</dimen>
     <dimen name="font_size_title">24sp</dimen>
     <dimen name="thirty_six">36dp</dimen>
     <dimen name="twenty_eight">28dp</dimen>
@@ -23,4 +24,5 @@
     <dimen name="font_size_ten">10sp</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="zeropointfive">0.5dp</dimen>
+
 </resources>

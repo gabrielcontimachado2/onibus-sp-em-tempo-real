@@ -29,6 +29,9 @@
         <argument
             android:name="stop"
             app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
     </dialog>
 
 

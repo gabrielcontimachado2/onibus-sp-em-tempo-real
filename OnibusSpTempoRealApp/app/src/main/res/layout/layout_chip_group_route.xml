@@ -6,8 +6,9 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontal_scroll"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -16,21 +17,21 @@
             android:id="@+id/chipGroup_bus_route"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
-            app:singleLine="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_teste"
-                android:text="teste"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_teste2"
-                android:text="teste222"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            app:singleLine="true"
+            app:singleSelection="true">
 
         </com.google.android.material.chip.ChipGroup>
+
     </HorizontalScrollView>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@color/gray_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
